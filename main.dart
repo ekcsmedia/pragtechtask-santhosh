@@ -7,7 +7,7 @@ import 'package:pragtechtask/sharedPrefs.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  // WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 
@@ -34,7 +34,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   late List<UserModel>? _userModel = [];
   final List<UserModel> _liked = [];
-  late List<UserModel> _likedList;
+  // late List<UserModel> _likedList;
 
   @override
   void initState() {
@@ -99,8 +99,8 @@ class _HomeState extends State<Home> {
                                   } else {
                                     _liked.add(liked);
                                   }
-                                  print(_liked);
-                                  sharedpref(_liked);
+                                  // print(_liked.first);
+                                  //    sharedpref(_liked);
                                 });
                               },
                             ),
