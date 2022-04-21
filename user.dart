@@ -37,6 +37,15 @@ class UserModel {
         "phone": phone,
       };
 
+  Map<String, dynamic> toMap() {
+    // ignore: unnecessary_cast
+    return {
+      'id': this.id,
+      'name': this.name,
+      'email': this.email,
+      'phone': this.phone,
+    } as Map<String, dynamic>;
+  }
   @override
   String toString() {
     return '{ ${this.id}, ${this.name}, ${this.email}, ${this.phone} }';

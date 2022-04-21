@@ -1,14 +1,15 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:pragtechtask/api_service.dart';
 import 'package:pragtechtask/model/user.dart';
 import 'package:pragtechtask/sharedPrefs.dart';
+// import 'package:pragtechtask/sharedPrefs.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
-  // WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
+  SharedPreference sharedPreference = new SharedPreference();
 }
 
 class MyApp extends StatelessWidget {
@@ -33,13 +34,14 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   late List<UserModel>? _userModel = [];
-  final List<UserModel> _liked = [];
+  List<UserModel> _liked = [];
   // late List<UserModel> _likedList;
 
   @override
   void initState() {
     super.initState();
     _getData();
+    _liked = SharedPreference().retrieve();
   }
 
   void _getData() async {
@@ -99,8 +101,11 @@ class _HomeState extends State<Home> {
                                   } else {
                                     _liked.add(liked);
                                   }
-                                  // print(_liked.first);
-                                  //    sharedpref(_liked);
+                                  String jsondata = jsonEncode(_liked);
+                                  //  print(jsondata);
+                                  SharedPreference().save(jsondata);
+                                  // const String key = "users";
+                                  //  List<UserModel> users = _liked;
                                 });
                               },
                             ),
@@ -113,5 +118,22 @@ class _HomeState extends State<Home> {
               ),
       ),
     );
+  }
+
+  save(data) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    var mylikedList = data;
+    final myItemsAsJsonString = json.encode(mylikedList);
+    await prefs.setString("KEY_1", myItemsAsJsonString);
+    return 'saved';
+  }
+
+  retrieve() async {
+    //const likedKey = 'liked';
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? myItemsAsJsonString = prefs.getString("KEY_1");
+    final List<UserModel> myItems = json.decode(myItemsAsJsonString!);
+    _liked = myItems;
   }
 }

@@ -1,9 +1,9 @@
+import 'package:pragtechtask/model/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 
-
-class SharedPreference{
-    save(data) async {
+class SharedPreference {
+  save(data) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
     var mylikedList = data;
@@ -16,7 +16,10 @@ class SharedPreference{
     //const likedKey = 'liked';
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final String? myItemsAsJsonString = prefs.getString("KEY_1");
-    final List<dynamic> myItems = json.decode(myItemsAsJsonString!);
-  //  _liked = myItems;
+    final String myItems = json.decode(myItemsAsJsonString!);
+    List<UserModel> _modelLiked = userModelFromJson(myItems);
+
+    print(_modelLiked);
+    return _modelLiked;
   }
 }
