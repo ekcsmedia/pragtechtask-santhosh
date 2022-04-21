@@ -1,19 +1,22 @@
-/* import 'dart:convert';
-
-import 'package:pragtechtask/model/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
 
-// to convert the objects list to string and use it in shared preference and get back the objects from String
 
-Future<List<UserModel>> sharedpref(var listdata) async {
-  List<UserModel> _likedList = listdata;
-  final SharedPreferences prefs = await SharedPreferences.getInstance();
-  String jsondata = jsonEncode(_likedList);
-  await prefs.setString('liked_key', jsondata);
-  final String? likedString = await prefs.getString('liked_key');
-  //final List<UserModel> _liked = UserModel.decode(likedString);
+class SharedPreference{
+    save(data) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
 
-  return _likedList;
+    var mylikedList = data;
+    final myItemsAsJsonString = json.encode(mylikedList);
+    await prefs.setString("KEY_1", myItemsAsJsonString);
+    return 'saved';
+  }
+
+  retrieve() async {
+    //const likedKey = 'liked';
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? myItemsAsJsonString = prefs.getString("KEY_1");
+    final List<dynamic> myItems = json.decode(myItemsAsJsonString!);
+  //  _liked = myItems;
+  }
 }
-
-*/
